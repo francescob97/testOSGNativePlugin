@@ -11,6 +11,8 @@
   below are appended to the original project settings instead of replacing them.
   Release libraries are used for every configuration because the project always builds
   against the release CRT (/MD).
+  user32/gdi32 are needed by the hidden OpenGL window (CreateWindowEx, ChoosePixelFormat...):
+  the original project lists only opengl32/d3d12, so the Windows defaults are not inherited.
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
@@ -23,7 +25,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(OSGEARTH_SDK)\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>%(AdditionalDependencies);osgEarth.lib;osgViewer.lib;osgGA.lib;osgDB.lib;osgUtil.lib;osg.lib;OpenThreads.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);osgEarth.lib;osgViewer.lib;osgGA.lib;osgDB.lib;osgUtil.lib;osg.lib;OpenThreads.lib;user32.lib;gdi32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
 </Project>
