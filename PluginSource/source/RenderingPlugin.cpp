@@ -132,6 +132,12 @@ extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API RegisterPlugin()
 static RenderAPI* s_CurrentAPI = NULL;
 static UnityGfxRenderer s_DeviceType = kUnityGfxRendererNull;
 
+#if SUPPORT_OSGEARTH
+// osgEarth viewer (OpenGL) shown in Unity through D3D11, see OsgEarthViewer.cpp
+void OsgEarth_Render(IUnityInterfaces* unityInterfaces);
+void OsgEarth_Shutdown();
+#endif
+
 
 static void UNITY_INTERFACE_API OnGraphicsDeviceEvent(UnityGfxDeviceEventType eventType)
 {
@@ -152,6 +158,9 @@ static void UNITY_INTERFACE_API OnGraphicsDeviceEvent(UnityGfxDeviceEventType ev
 	// Cleanup graphics API implementation upon shutdown
 	if (eventType == kUnityGfxDeviceEventShutdown)
 	{
+#if SUPPORT_OSGEARTH
+		OsgEarth_Shutdown();
+#endif
 		delete s_CurrentAPI;
 		s_CurrentAPI = NULL;
 		s_DeviceType = kUnityGfxRendererNull;
@@ -320,6 +329,14 @@ static void UNITY_INTERFACE_API OnRenderEvent(int eventID)
 		drawToPluginTexture();
 	}
 
+#if SUPPORT_OSGEARTH
+	// 3: draw one osgEarth frame into the texture set with OsgEarth_SetTexture (D3D11 only)
+	// 4: destroy the osgEarth viewer and its OpenGL context
+	if (eventID == 3 && s_DeviceType == kUnityGfxRendererD3D11)
+		OsgEarth_Render(s_UnityInterfaces);
+	if (eventID == 4)
+		OsgEarth_Shutdown();
+#endif
 }
 
 // --------------------------------------------------------------------------

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  OpenSceneGraph 3.6 + osgEarth 3.x settings for RenderingPlugin (x64 builds only).
+
+  OSGEARTH_SDK must point to a folder containing include\, lib\ and bin\ of OSG and osgEarth.
+  With vcpkg ("vcpkg install osgearth:x64-windows") that is <vcpkg root>\installed\x64-windows.
+  Either set OSGEARTH_SDK as an environment variable (and restart Visual Studio) or change the
+  default below.
+
+  RenderingPlugin.vcxproj imports this file *after* its own ItemDefinitionGroups, so the values
+  below are appended to the original project settings instead of replacing them.
+  Release libraries are used for every configuration because the project always builds
+  against the release CRT (/MD).
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <OSGEARTH_SDK Condition="'$(OSGEARTH_SDK)' == ''">C:\vcpkg\installed\x64-windows</OSGEARTH_SDK>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);SUPPORT_OSGEARTH=1</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(OSGEARTH_SDK)\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(OSGEARTH_SDK)\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);osgEarth.lib;osgViewer.lib;osgGA.lib;osgDB.lib;osgUtil.lib;osg.lib;OpenThreads.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>

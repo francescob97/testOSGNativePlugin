@@ -1,0 +1,23 @@
+<!--
+Example map for the osgEarth viewer inside Unity (UseOsgEarthPlugin.cs).
+
+Same layers as osgEarth's tests/readymap.earth: imagery and elevation are streamed from
+ReadyMap.org, so an internet connection is needed. YOU ARE RESPONSIBLE for abiding by
+the terms and conditions at https://readymap.org
+
+Any other .earth file works too: put it in StreamingAssets (or use an absolute path)
+and change "Command Line" on the UseOsgEarthPlugin component, e.g.
+    C:/osgearth/tests/simple.earth --sky
+-->
+<map name="ReadyMap.org">
+
+    <TMSImage name="ReadyMap 15m Imagery">
+        <url>https://readymap.org/readymap/tiles/1.0.0/7/</url>
+    </TMSImage>
+
+    <TMSElevation name="ReadyMap 90m Elevation">
+        <url>https://readymap.org/readymap/tiles/1.0.0/116/</url>
+        <vdatum>egm96</vdatum>
+    </TMSElevation>
+
+</map>

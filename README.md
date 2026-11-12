@@ -1,5 +1,7 @@
 # Native code (C++) rendering plugin example for Unity
 
+> **This fork** also embeds the osgEarth OpenGL viewer in the Direct3D 11 Unity project: see [README_osgEarth.md](README_osgEarth.md).
+
 This sample demonstrates how to render and do other graphics related things from a C++ plugin, via a
 [native plugin interface](http://docs.unity3d.com/Manual/NativePluginInterface.html).
 
